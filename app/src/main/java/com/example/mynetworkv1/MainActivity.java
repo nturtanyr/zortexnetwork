@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.JsonReader;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.util.regex.*;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         (new GetTraders()).execute();
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(myDataset, this.getApplicationContext());
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 myConnection =
                         (HttpsURLConnection) zortexTraders.openConnection();
                 myConnection.setRequestProperty("User-Agent", "mynetworkv1");
+                Log.d("tradersAPI", "response code is "+myConnection.getResponseCode());
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -76,21 +80,43 @@ public class MainActivity extends AppCompatActivity {
                             new InputStreamReader(responseBody, "UTF-8");
                     JsonReader jsonReader = new JsonReader(responseBodyReader);
 
+
                     jsonReader.beginObject(); // Start processing the JSON object
                     while (jsonReader.hasNext()) { // Loop through all keys
-                        String key = jsonReader.nextName(); // Fetch the next key
-                        if (key.equals("title")) { // Check if desired key
-                            // Fetch the value as a String
-                            myDataset.add(jsonReader.nextString());
 
-                            // Do something with the value
-                            // ...
+                        Log.d("traders", "Found object " + jsonReader.nextName()); // Fetch the next key
 
-                            break; // Break out of the loop
-                        } else {
-                            jsonReader.skipValue(); // Skip values of other keys
+                        jsonReader.beginArray();
+                        while (jsonReader.hasNext()){
+                            jsonReader.beginObject();
+                            while (jsonReader.hasNext()) {
+                                String key = jsonReader.nextName();
+                                Log.d("traders", "Checking key " + key);
+                                if (key.equals("card")) { // Check if desired key
+                                    // Fetch the value as a String
+                                    String cardValue = jsonReader.nextString();
+                                    Log.d("traders", "Found title " + cardValue);
+                                    // Do something with the value
+                                    // ...
+                                    Pattern pattern = Pattern.compile("\\/v1\\/(\\S+)\\/");
+                                    Matcher matcher = pattern.matcher(cardValue);
+                                    // "\\\\/v1\\\\/(\\S+)\\\\/" regex
+                                    if(matcher.find()){
+                                        Log.d("traders","Found match"+matcher.group(1));
+                                        myDataset.add("https://static.wixstatic.com/media/"+matcher.group(1));
+                                    }
+
+
+                                } else {
+                                    jsonReader.skipValue(); // Skip values of other keys
+                                }
+
+                            }
+                            jsonReader.endObject();
                         }
+                        jsonReader.endArray();
                     }
+                    jsonReader.endObject();
 
                     jsonReader.close();
                     myConnection.disconnect();
