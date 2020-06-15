@@ -2,9 +2,11 @@ package com.example.mynetworkv1;
 
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.JsonReader;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import java.io.IOException;
@@ -30,6 +32,7 @@ final class GetTraders extends AsyncTask<Void, Void, String> {
         // Before running my async code, create the alert dialog object
         issueWithAPI = new AlertDialog.Builder(mainActivity).create();
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected String doInBackground(Void... params) {
         // Create API object to work with the API
@@ -62,7 +65,7 @@ final class GetTraders extends AsyncTask<Void, Void, String> {
                         traderObject.defineTrader(jsonReader);
 
                         // In the meantime, we add the card URL to the list of strings
-                        mainActivity.cardList.add(traderObject.card_URL);
+                        mainActivity.traderList.add(traderObject);
                     }
                     jsonReader.endArray();
                 }

@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     public RecyclerView.Adapter cardListAdapter;
-    public ArrayList<String> cardList = new ArrayList<String>();
+    public ArrayList<Trader> traderList = new ArrayList<Trader>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Specifying an adapter using the CardListAdapter and our card list
-        cardListAdapter = new CardListAdapter(cardList, this);
+        cardListAdapter = new CardListAdapter(traderList, this);
         recyclerView.setAdapter(cardListAdapter);
     }
+
 
 }

@@ -4,10 +4,11 @@ import android.util.Log;
 import android.util.JsonReader;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Trader {
+public class Trader implements Serializable {
     // Defining a Trader object for use to collect and organise trader information
     // Just a bunch of strings for now
     public String name;
