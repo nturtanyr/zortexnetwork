@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.mynetworkv1.R;
+import com.example.mynetworkv1.Trader;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -19,9 +20,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
+    private final Trader mTrader;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, Trader trader) {
         super(fm);
+        mTrader = trader;
         mContext = context;
     }
 
@@ -31,7 +34,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         // TODO Define the differences between pages - have DescriptionFragment and ContactFragment
         // Description can be on position 1, Contact on position 2
-        return PlaceholderFragment.newInstance(position + 1);
+        if(position == 1){
+            return DescriptionFragment.newInstance(position + 1, mTrader);
+
+        }else{
+            return PlaceholderFragment.newInstance(position + 1);
+
+        }
     }
 
     @Nullable

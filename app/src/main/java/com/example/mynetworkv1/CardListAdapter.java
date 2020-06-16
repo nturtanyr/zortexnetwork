@@ -71,7 +71,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
                 // TODO Auto-generated method stub
 
                 Intent loadTrader = new Intent(currentContext, IndividualTrader.class);
-                loadTrader.putExtra("Trader", traderList.get(position));
+                loadTrader.putExtra("Trader", traderList.get(position).id);
                 currentContext.startActivity(loadTrader);
             }
         });

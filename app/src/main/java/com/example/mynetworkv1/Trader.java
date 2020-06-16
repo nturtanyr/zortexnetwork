@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Trader implements Serializable {
+public class Trader {
     // Defining a Trader object for use to collect and organise trader information
     // Just a bunch of strings for now
     public String name;
@@ -81,7 +81,7 @@ public class Trader implements Serializable {
                     case "card": {
                         String cardValue = jsonReader.nextString();
                         Log.d("traders", "Found title " + cardValue);
-                        Pattern pattern = Pattern.compile("\\/v1\\/(\\S+)\\/");
+                        Pattern pattern = Pattern.compile("/v1/(\\S+)/");
                         Matcher matcher = pattern.matcher(cardValue);
                         if (matcher.find()) {
                             Log.d("traders", "Found match" + matcher.group(1));
@@ -92,7 +92,7 @@ public class Trader implements Serializable {
                     case "logo": {
                         String cardValue = jsonReader.nextString();
                         Log.d("traders", "Found title " + cardValue);
-                        Pattern pattern = Pattern.compile("\\/v1\\/(\\S+)\\/");
+                        Pattern pattern = Pattern.compile("/v1/(\\S+)/");
                         Matcher matcher = pattern.matcher(cardValue);
                         if (matcher.find()) {
                             Log.d("traders", "Found match" + matcher.group(1));

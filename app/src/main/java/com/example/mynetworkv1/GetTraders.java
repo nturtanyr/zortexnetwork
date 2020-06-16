@@ -40,11 +40,10 @@ final class GetTraders extends AsyncTask<Void, Void, String> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected String doInBackground(Void... params) {
-        ArrayList<Trader> traderList = new ArrayList<Trader>();
         // Create API object to work with the API
         ZortexAPI zortexAPI = new ZortexAPI();
-        // Get the response code of the getTraders function
-        traderList = zortexAPI.getTraders();
+        // Get the list of traders using getTraders function
+        ArrayList<Trader> traderList = zortexAPI.getTraders();
         if(traderList.size() > 0) {
             cardListAdapter.traderList = traderList;
             return "Success";
@@ -55,10 +54,10 @@ final class GetTraders extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(result == "No traders found"){
+        if(result.equals("No traders found")){
             // There was an error! So we throw the alert dialog;
             issueWithAPI.setTitle("ERROR");
-            issueWithAPI.setMessage(currentContext.getResources().getString(R.string.tab_text_1));
+            issueWithAPI.setMessage(currentContext.getResources().getString(R.string.network_error_message));
             issueWithAPI.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -73,7 +72,7 @@ final class GetTraders extends AsyncTask<Void, Void, String> {
             });
             issueWithAPI.show();
         }
-        else if (result == "Success"){
+        else if (result.equals("Success")){
             // Else, update the cardListAdapter to say that the cards should be populated!
             cardListAdapter.notifyDataSetChanged();
         }else {
