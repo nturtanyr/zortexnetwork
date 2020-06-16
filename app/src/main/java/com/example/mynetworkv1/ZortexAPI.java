@@ -15,7 +15,7 @@ public class ZortexAPI {
     // Creating a zortexAPI object to organise connection functions and session data
 
     // Defining public connection variable that can be contacted for session information
-    public HttpsURLConnection connection;
+    private HttpsURLConnection connection;
 
     // API URIs
     private String zortexApi_Root = "https://www.zortex.co.uk/_functions/";
@@ -43,7 +43,7 @@ public class ZortexAPI {
 
             // Sets the UserAgent (so we can track who uses our API)
             this.connection.setRequestProperty("User-Agent", zortexApi_userAgent);
-            Log.d("ZORTEXAPI","Returned " + connection.getResponseCode() + " response code");
+            Log.d("ZORTEXAPI","Returned " + this.connection.getResponseCode() + " response code");
 
             // Returns with a responsecode
             if (connection.getResponseCode() == 200) {
@@ -94,15 +94,15 @@ public class ZortexAPI {
         // Create connection
         try {
             // Defines a URL using the API URL
-            URL getTrader_URL = new URL(zortexApi_Root + zortexApi_trader_endpoint + "/" + id);
-            Log.d("ZORTEXAPI","Contacting " + zortexApi_Root + zortexApi_trader_endpoint + "/" + id);
+            URL getTrader_URL = new URL(zortexApi_Root + zortexApi_traders_endpoint);
+            Log.d("ZORTEXAPI","Contacting " + zortexApi_Root + zortexApi_traders_endpoint);
 
             // Then attempts to open the connection and assigns to this object's connection variable for later use
             this.connection = (HttpsURLConnection) getTrader_URL.openConnection();
 
             // Sets the UserAgent (so we can track who uses our API)
             this.connection.setRequestProperty("User-Agent", zortexApi_userAgent);
-            Log.d("ZORTEXAPI","Returned " + connection.getResponseCode() + " response code");
+            Log.d("ZORTEXAPI","Returned " + this.connection.getResponseCode() + " response code");
 
             // Returns with a responsecode
             if (connection.getResponseCode() == 200) {
@@ -122,9 +122,11 @@ public class ZortexAPI {
                     // We know the first object is "items", which is an array of the traders, so here we loop through them
                     jsonReader.beginArray();
                     while (jsonReader.hasNext()){
-                        // For each trader we define a new object (but don't store it. We can do this later
-                        traderObject = new Trader();
-                        traderObject.readTrader(jsonReader);
+                        // For each trader we define a new object but don't store it. We can do this later
+                        Trader tempTrader = new Trader().readTrader(jsonReader);
+                        if(tempTrader.id.equals(id)){
+                            traderObject = tempTrader;
+                        }
                     }
                     jsonReader.endArray();
                 }

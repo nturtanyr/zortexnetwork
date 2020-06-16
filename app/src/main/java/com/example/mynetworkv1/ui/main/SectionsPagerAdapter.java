@@ -20,11 +20,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
-    private final Trader mTrader;
+    private final String mTraderID;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm, Trader trader) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, String traderID) {
         super(fm);
-        mTrader = trader;
+        mTraderID = traderID;
         mContext = context;
     }
 
@@ -34,9 +34,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         // TODO Define the differences between pages - have DescriptionFragment and ContactFragment
         // Description can be on position 1, Contact on position 2
-        if(position == 1){
-            return DescriptionFragment.newInstance(position + 1, mTrader);
-
+        if(position == 0){
+            return DescriptionFragment.newInstance(position + 1, mTraderID);
         }else{
             return PlaceholderFragment.newInstance(position + 1);
 

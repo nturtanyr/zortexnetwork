@@ -50,7 +50,7 @@ public class PlaceholderFragment extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_individual_trader, container, false);
 
-        final TextView textView = root.findViewById(R.id.trader_title);
+        final TextView textView = root.findViewById(R.id.textView);
         pageViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

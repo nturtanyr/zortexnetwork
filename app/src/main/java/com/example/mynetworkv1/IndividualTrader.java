@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.example.mynetworkv1.ui.main.SectionsPagerAdapter;
 public class IndividualTrader extends AppCompatActivity {
 
     public Trader currentTrader = new Trader();
-    private ZortexAPI zortexApi = new ZortexAPI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,28 +29,25 @@ public class IndividualTrader extends AppCompatActivity {
         // TODO Rather than build from a Trader object, build using the ID and then use the API to call the information again
         // This allows us to keep our memory cache fresh
         // Before running my async code, create the alert dialog object
-        currentTrader = zortexApi.getTrader((String) getIntent().getSerializableExtra("Trader"));
-        if(currentTrader == null) {
-            // There was an error! So we throw the alert dialog;
-            showAPIAlert();
-        }
-        else {
-            setContentView(R.layout.activity_individual_trader);
-            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), currentTrader);
-            ViewPager viewPager = findViewById(R.id.view_pager);
-            viewPager.setAdapter(sectionsPagerAdapter);
-            TabLayout tabs = findViewById(R.id.tabs);
-            tabs.setupWithViewPager(viewPager);
-            FloatingActionButton fab = findViewById(R.id.fab);
+        String mTraderID = (String) getIntent().getSerializableExtra("Trader");
+        Log.d("ZORTEXAPI","Passed ID as " + mTraderID);
+        // Exceutes async task that'll begin collecting trader data and update our card view
+        setContentView(R.layout.activity_individual_trader);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), mTraderID);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-        }
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
     }
 
     private void showAPIAlert(){
