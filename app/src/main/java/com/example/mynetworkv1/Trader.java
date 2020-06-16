@@ -28,7 +28,7 @@ public class Trader implements Serializable {
         //TODO: Fill this out to assign all variables with a dictionary or something
     }
 
-    public Trader defineTrader(JsonReader jsonReader)
+    public Trader readTrader(JsonReader jsonReader)
     {
         // This contructs the Trader object using the JSON that's given by the API - had to use a JsonReader right now but could be better with something else more generic
         try {

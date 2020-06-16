@@ -20,12 +20,12 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
     // The adapter class for our cards, converting our card details to ImageViews
 
     // define list of strings that will have our card URLs
-    private ArrayList<Trader> mDataset;
 
     // And the image loader that'll hadnle downloading to the cache and displaying the cards
     ImageLoader imageLoader;
 
     Context currentContext;
+    public ArrayList<Trader> traderList = new ArrayList<Trader>();
 
     // This defines the view that'll hold our data
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -38,9 +38,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
     }
 
     // Then we construct using a list of URIs and our current context
-    public CardListAdapter(ArrayList<Trader> myDataset, Context context) {
+    public CardListAdapter(Context context) {
         // Intialise our string array list
-        mDataset = myDataset;
         currentContext = context;
         // Create global configuration and initialize ImageLoader
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(currentContext).build();
@@ -64,7 +63,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         // Displaying the image we want at that position in the ImageView
-        imageLoader.displayImage(mDataset.get(position).card_URL, holder.imageView);
+        imageLoader.displayImage(traderList.get(position).card_URL, holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -72,7 +71,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
                 // TODO Auto-generated method stub
 
                 Intent loadTrader = new Intent(currentContext, IndividualTrader.class);
-                loadTrader.putExtra("Trader", mDataset.get(position));
+                loadTrader.putExtra("Trader", traderList.get(position));
                 currentContext.startActivity(loadTrader);
             }
         });
@@ -83,7 +82,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return traderList.size();
     }
 }
 

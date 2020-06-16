@@ -24,6 +24,7 @@ public class PlaceholderFragment extends Fragment {
     private PageViewModel pageViewModel;
 
     public static PlaceholderFragment newInstance(int index) {
+        // TODo Change this so that it builds using the Trader object
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);

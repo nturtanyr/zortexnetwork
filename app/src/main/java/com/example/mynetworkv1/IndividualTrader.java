@@ -22,6 +22,8 @@ public class IndividualTrader extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // TODO Rather than build from a Trader object, build using the ID and then use the API to call the information again
+        // This allows us to keep our memory cache fresh
         currentTrader = (Trader) getIntent().getSerializableExtra("Trader");
         setContentView(R.layout.activity_individual_trader);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
