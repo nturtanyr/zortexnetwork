@@ -90,6 +90,7 @@ public class ZortexAPI {
     // Function for pulling a specific trader's information
     public Trader getTrader (String id)
     {
+        Log.d("ZORTEXAPI", "Looking to match id: " + id);
         Trader traderObject = null;
         // Create connection
         try {
@@ -117,7 +118,7 @@ public class ZortexAPI {
                 jsonReader.beginObject();
                 while (jsonReader.hasNext()) {
 
-                    Log.d("traders", "Found object " + jsonReader.nextName()); // Fetch the next key
+                    Log.d("ZORTEXAPI", "Found object " + jsonReader.nextName()); // Fetch the next key
 
                     // We know the first object is "items", which is an array of the traders, so here we loop through them
                     jsonReader.beginArray();
@@ -125,6 +126,7 @@ public class ZortexAPI {
                         // For each trader we define a new object but don't store it. We can do this later
                         Trader tempTrader = new Trader().readTrader(jsonReader);
                         if(tempTrader.id.equals(id)){
+                            Log.d("ZORTEXAPI", "Found object that matches id!"); // Fetch the next key
                             traderObject = tempTrader;
                         }
                     }

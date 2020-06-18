@@ -5,6 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -18,8 +22,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        // Define new view that'll contain trader cards
+        Handler UIHandler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message inputMessage) {
+                ArrayList<Trader> tradersList = (ArrayList<Trader>) inputMessage.obj;
+                switch(inputMessage.what){
+                    case 500:
+                        Log.d("HANDLER","The MAIN handler received 500");
+                        DialogAlert.showAPIAlert(getApplicationContext());
+                        break;
+                    case 200:
+                        Log.d("HANDLER","The MAIN handler received 200");
+                        cardListAdapter.SetCardList(tradersList);
+                        cardListAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                        Log.d("HANDLER","The MAIN handler received nowt!");
+                }
+            }
+        };
+                // Define new view that'll contain trader cards
         recyclerView = findViewById(R.id.my_recycler_view);
 
         // We use this setting to improve performance as changes
@@ -34,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         cardListAdapter = new CardListAdapter(this);
         recyclerView.setAdapter(cardListAdapter);
 
-        // Exceutes async task that'll begin collecting trader data and update our card view
-        (new GetTraders(this, cardListAdapter)).execute();
+        (new CallAPI(UIHandler,"traders",null)).execute();
     }
 
 

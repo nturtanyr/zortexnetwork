@@ -7,6 +7,7 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mynetworkv1.R;
 import com.example.mynetworkv1.Trader;
@@ -34,12 +35,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         // TODO Define the differences between pages - have DescriptionFragment and ContactFragment
         // Description can be on position 1, Contact on position 2
+        Fragment fragment;
         if(position == 0){
-            return DescriptionFragment.newInstance(position + 1, mTraderID);
+            fragment = DescriptionFragment.newInstance(mTraderID);
         }else{
-            return PlaceholderFragment.newInstance(position + 1);
-
+            fragment = ContactFragment.newInstance(mTraderID);
         }
+
+        return fragment;
     }
 
     @Nullable

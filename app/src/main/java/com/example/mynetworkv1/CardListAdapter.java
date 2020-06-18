@@ -14,8 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyViewHolder> {
     // The adapter class for our cards, converting our card details to ImageViews
 
@@ -35,6 +33,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
             super(v);
             imageView = v;
         }
+    }
+
+    public void SetCardList (ArrayList<Trader> traders){
+        this.traderList = traders;
     }
 
     // Then we construct using a list of URIs and our current context

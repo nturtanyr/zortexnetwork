@@ -3,42 +3,36 @@ package com.example.mynetworkv1.ui.main;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
+
+import com.example.mynetworkv1.Trader;
 
 public class PageViewModel extends ViewModel {
 
-    private MutableLiveData<Integer> mIndex = new MutableLiveData<Integer>();
-    private MutableLiveData<String> mTitle = new MutableLiveData<String>();
-    private MutableLiveData<String> mDescription = new MutableLiveData<String>();
-    private LiveData<String> mText = Transformations.map(mIndex, new Function<Integer, String>() {
-        @Override
-        public String apply(Integer input) {
-            return "Hello world from section: " + input;
-        }
-    });
+    private MutableLiveData<Trader> mTrader = new MutableLiveData<Trader>();
 
-    public void setIndex(int index) {
-        mIndex.setValue(index);
-    }
-
-    public void setDescription(String string) {
-        mDescription.setValue(string);
-    }
-
-    public void setTitle(String string) {
-        mTitle.setValue(string);
-    }
-
-    public LiveData<String> getText() {
-        return mText;
+    public void setTrader(Trader trader){
+        mTrader.setValue(trader);
     }
 
     public LiveData<String> getTraderDescription() {
+        MutableLiveData<String> mDescription = new MutableLiveData<String>();
+        if(mTrader.getValue() != null) {
+            mDescription.setValue(mTrader.getValue().description);
+        }else
+        {
+            mDescription.setValue("Empty Description");}
         return mDescription;
     }
 
     public LiveData<String> getTraderTitle() {
+
+        MutableLiveData<String> mTitle = new MutableLiveData<String>();
+        if(mTrader.getValue() != null) {
+            mTitle.setValue(mTrader.getValue().name);
+        }
+        else
+        {mTitle.setValue("Empty Name");}
         return mTitle;
     }
 }
