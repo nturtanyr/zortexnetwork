@@ -7,8 +7,10 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mynetworkv1.R;
+import com.example.mynetworkv1.Trader;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -19,9 +21,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
     private final Context mContext;
+    private final String mTraderID;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, String traderID) {
         super(fm);
+        mTraderID = traderID;
         mContext = context;
     }
 
@@ -29,7 +33,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        // Description can be on position 1, Contact on position 2
+        Fragment fragment;
+        if(position == 0){
+            fragment = DescriptionFragment.newInstance(mTraderID);
+        }else{
+            fragment = ContactFragment.newInstance(mTraderID);
+        }
+
+        return fragment;
     }
 
     @Nullable
