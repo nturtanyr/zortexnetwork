@@ -18,7 +18,7 @@ public class Trader {
     public String city;
     public String subdivision;
     public String country;
-    public String formatedAddress;
+    public String formattedAddress;
     public String description;
     public String logo_URL;
     public String card_URL;
@@ -52,9 +52,7 @@ public class Trader {
                     case "phone":
                         this.phone = jsonReader.nextString();
                         break;
-                    case "formatted":
-                        this.formatedAddress = jsonReader.nextString();
-                        break;
+
 
                     // Address is multi-layered so its split up
                     case "address":
@@ -67,6 +65,8 @@ public class Trader {
                                 this.country = jsonReader.nextString();
                             } else if (key.equals("subdivision")) {
                                 this.subdivision = jsonReader.nextString();
+                            } else if (key.equals("formatted")) {
+                                this.formattedAddress = jsonReader.nextString();
                             } else {
                                 jsonReader.skipValue(); // Skip values of other keys
                             }

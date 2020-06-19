@@ -21,6 +21,28 @@ public class PageViewModel extends ViewModel {
             return input.name;
         }
     });
+
+    private LiveData<String> mEmail = Transformations.map(mTrader, new Function<Trader, String>() {
+        @Override
+        public String apply(Trader input) {
+            return input.email;
+        }
+    });
+
+    private LiveData<String> mPhone = Transformations.map(mTrader, new Function<Trader, String>() {
+        @Override
+        public String apply(Trader input) {
+            return input.phone;
+        }
+    });
+
+    private LiveData<String> mLocation = Transformations.map(mTrader, new Function<Trader, String>() {
+        @Override
+        public String apply(Trader input) {
+            return input.formattedAddress;
+        }
+    });
+
     private LiveData<String> mDescription = Transformations.map(mTrader, new Function<Trader, String>() {
         @Override
         public String apply(Trader input) {
@@ -28,12 +50,15 @@ public class PageViewModel extends ViewModel {
         }
     });
 
+    private LiveData<String> mTraderLogo = Transformations.map(mTrader, new Function<Trader, String>() {
+        @Override
+        public String apply(Trader input) {
+            return input.logo_URL;
+        }
+    });
+
     public void setTrader(Trader trader) {
         this.mTrader.setValue(trader);
-        Log.d("VIEWMODEL","Setting the trader with traderID " + trader.id);
-        Log.d("VIEWMODEL","Confirming we now have a trader: " + mTrader.getValue().id);
-        Log.d("VIEWMODEL","Title: " + this.getTraderTitle());
-        Log.d("VIEWMODEL","Desc: " + this.getTraderDescription());
     }
 
     public LiveData<String> getTraderDescription() {
@@ -41,8 +66,28 @@ public class PageViewModel extends ViewModel {
         return mDescription;
     }
 
+    public LiveData<String> getTraderEmail() {
+
+        return mEmail;
+    }
+
+    public LiveData<String> getTraderPhone() {
+
+        return mPhone;
+    }
+
+    public LiveData<String> getTraderLocation() {
+
+        return mLocation;
+    }
+
     public LiveData<String> getTraderTitle() {
 
         return mTitle;
+    }
+
+    public LiveData<String> getTraderLogoURL() {
+
+        return mTraderLogo;
     }
 }

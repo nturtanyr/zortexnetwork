@@ -2,7 +2,9 @@ package com.example.mynetworkv1.ui.main;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.mynetworkv1.CallAPI;
 import com.example.mynetworkv1.DialogAlert;
@@ -29,6 +32,10 @@ public class ContactFragment extends Fragment {
     private static final String ARG_TRADERID = "null";
 
     private PageViewModel pageViewModel;
+
+    private TextView traderEmail;
+    private TextView traderPhone;
+    private TextView traderLocation;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -55,7 +62,33 @@ public class ContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_contact, container, false);
-        FloatingActionButton emailButton = root.findViewById(R.id.contact_email);
+
+        traderEmail = root.findViewById(R.id.contact_email);
+        traderPhone = root.findViewById(R.id.contact_phone);
+        traderLocation = root.findViewById(R.id.contact_location);
+
+        pageViewModel.getTraderEmail().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                traderEmail.setText("Email: " + s);
+            }
+        });
+
+        pageViewModel.getTraderPhone().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                traderPhone.setText("Phone: " + s);
+            }
+        });
+
+        pageViewModel.getTraderLocation().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                traderLocation.setText("Location: " + s);
+            }
+        });
+
+        FloatingActionButton emailButton = root.findViewById(R.id.button_email);
 
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override

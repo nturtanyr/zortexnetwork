@@ -6,4 +6,11 @@
     <string name="network_error_message">There was an problem connecting to the zortex servers. Please ensure you have a working network connection.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_contact">defaultText</string>
+    <string name="spinner_prompt">Select Category: </string>
+    <string-array name="category_list">
+        <item>Mental Health</item>
+        <item>Flooring</item>
+        <item>Business Consulting</item>
+        <item>Financial Services</item>
+    </string-array>
 </resources>

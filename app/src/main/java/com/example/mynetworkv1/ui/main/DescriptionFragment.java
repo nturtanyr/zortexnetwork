@@ -15,12 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mynetworkv1.CallAPI;
 import com.example.mynetworkv1.DialogAlert;
 import com.example.mynetworkv1.R;
 import com.example.mynetworkv1.Trader;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,8 @@ public class DescriptionFragment extends Fragment {
 
     private TextView textTraderTitle;
     private TextView textTraderDescription;
+    ImageLoader imageLoader;
+    private ImageView traderLogo;
 
     public DescriptionFragment() {
         // Required empty public constructor
@@ -59,6 +64,10 @@ public class DescriptionFragment extends Fragment {
         pageViewModel = (new ViewModelProvider(requireActivity())).get(PageViewModel.class);
         Log.i("test", "ViewModel-> " + pageViewModel.toString());
 
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.requireContext()).build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+
     }
 
     @Override
@@ -69,6 +78,7 @@ public class DescriptionFragment extends Fragment {
 
         textTraderTitle = root.findViewById(R.id.trader_title);
         textTraderDescription = root.findViewById(R.id.trader_description);
+        traderLogo = root.findViewById(R.id.trader_logo);
         Log.d("VIEWMODEL", "lifecycleowner-> " + getViewLifecycleOwner().toString());
 
         pageViewModel.getTraderDescription().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -83,6 +93,14 @@ public class DescriptionFragment extends Fragment {
                 textTraderTitle.setText(s);
             }
         });
+        pageViewModel.getTraderLogoURL().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                imageLoader.displayImage(s, traderLogo);
+            }
+        });
+
+
         return root;
     }
 }
