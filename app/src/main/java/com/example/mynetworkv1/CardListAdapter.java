@@ -70,7 +70,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.MyView
         {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 Intent loadTrader = new Intent(currentContext, IndividualTrader.class);
                 loadTrader.putExtra("Trader", traderList.get(position).id);

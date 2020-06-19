@@ -13,7 +13,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ZortexAPI {
     // Creating a zortexAPI object to organise connection functions and session data
-
+    // TODO Turn this into a proper WebService object
     // Defining public connection variable that can be contacted for session information
     private HttpsURLConnection connection;
 
@@ -88,6 +88,7 @@ public class ZortexAPI {
     }
 
     // Function for pulling a specific trader's information
+    // TODO Add a new HTTP API to change how the endpoint is pulled out
     public Trader getTrader (String id)
     {
         Log.d("ZORTEXAPI", "Looking to match id: " + id);

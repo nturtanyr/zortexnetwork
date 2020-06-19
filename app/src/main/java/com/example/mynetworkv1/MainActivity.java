@@ -12,6 +12,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+// TODO The card list should probably be a fragment called by an adapter still in the IndividualTrader activity
+// The IndividualTrader activity should act as a host for the cardlist as a fragment, and then shift focus to the tabbed layout when a card is selected.
+// That way we can control the viewModel directly in that
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-                // Define new view that'll contain trader cards
+        // Define new view that'll contain trader cards
         recyclerView = findViewById(R.id.my_recycler_view);
 
         // We use this setting to improve performance as changes

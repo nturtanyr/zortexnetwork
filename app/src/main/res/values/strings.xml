@@ -4,7 +4,6 @@
     <string name="tab_text_1">About</string>
     <string name="tab_text_2">Contact</string>
     <string name="network_error_message">There was an problem connecting to the zortex servers. Please ensure you have a working network connection.</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_contact">defaultText</string>
 </resources>

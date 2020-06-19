@@ -33,7 +33,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        // TODO Define the differences between pages - have DescriptionFragment and ContactFragment
         // Description can be on position 1, Contact on position 2
         Fragment fragment;
         if(position == 0){

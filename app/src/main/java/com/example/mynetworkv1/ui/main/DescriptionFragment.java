@@ -36,11 +36,13 @@ public class DescriptionFragment extends Fragment {
 
     private PageViewModel pageViewModel;
 
+    private TextView textTraderTitle;
+    private TextView textTraderDescription;
+
     public DescriptionFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static DescriptionFragment newInstance(String traderID) {
         DescriptionFragment fragment = new DescriptionFragment();
         Bundle args = new Bundle();
@@ -53,29 +55,9 @@ public class DescriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Exceutes async task that'll begin collecting trader data and update our card view
-        Handler UIHandler = new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(Message inputMessage) {
-                Trader trader = ((ArrayList<Trader>) inputMessage.obj).get(0);
-                Log.d("HANDLER","Found trader object: " + trader.id);
-                switch(inputMessage.what){
-                    case 500:
-                        Log.d("HANDLER","The DESCRIPTION handler received 500");
-                        DialogAlert.showAPIAlert(getContext());
-                        break;
-                    case 200:
-                        Log.d("HANDLER","The DESCRIPTION handler received 200");
-                        pageViewModel.setTrader(trader);
-                        Log.d("HANDLER","Updated trader object");
-                        break;
-                    default:
-                        Log.d("HANDLER","The DESCRIPTION handler received nowt!");
-                }
-            }
-        };
-        pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        (new CallAPI(UIHandler, "trader", getArguments().getString(ARG_TRADERID))).execute();
+
+        pageViewModel = (new ViewModelProvider(requireActivity())).get(PageViewModel.class);
+        Log.i("test", "ViewModel-> " + pageViewModel.toString());
 
     }
 
@@ -85,8 +67,9 @@ public class DescriptionFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_description, container, false);
 
-        final TextView textTraderTitle = root.findViewById(R.id.trader_title);
-        final TextView textTraderDescription = root.findViewById(R.id.trader_description);
+        textTraderTitle = root.findViewById(R.id.trader_title);
+        textTraderDescription = root.findViewById(R.id.trader_description);
+        Log.d("VIEWMODEL", "lifecycleowner-> " + getViewLifecycleOwner().toString());
 
         pageViewModel.getTraderDescription().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
