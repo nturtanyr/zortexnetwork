@@ -8,6 +8,7 @@
     <string name="default_contact">defaultText</string>
     <string name="spinner_prompt">Select Category: </string>
     <string-array name="category_list">
+        <item>All</item>
         <item>Mental Health</item>
         <item>Flooring</item>
         <item>Business Consulting</item>

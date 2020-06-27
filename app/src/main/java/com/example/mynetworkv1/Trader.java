@@ -15,6 +15,7 @@ public class Trader {
     public String id;
     public String email;
     public String phone;
+    public String category;
     public String city;
     public String subdivision;
     public String country;
@@ -51,6 +52,10 @@ public class Trader {
                         break;
                     case "phone":
                         this.phone = jsonReader.nextString();
+                        break;
+                        //I added this line
+                    case "category":
+                        this.category = jsonReader.nextString();
                         break;
 
 
@@ -100,6 +105,7 @@ public class Trader {
                         }
                         break;
                     }
+
                     default:
                         jsonReader.skipValue(); // Skip values of other keys
 

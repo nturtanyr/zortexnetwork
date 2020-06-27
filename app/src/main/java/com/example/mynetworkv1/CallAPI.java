@@ -52,6 +52,9 @@ public final class CallAPI extends AsyncTask<Void, Void, ArrayList<Trader>> {
             case "traders" :
                 returnObject = zortexAPI.getTraders();
                 break;
+            case "traders_by_category" :
+                returnObject = zortexAPI.getTradersByCategory(APIarguments);
+                break;
         }
         return returnObject;
     }

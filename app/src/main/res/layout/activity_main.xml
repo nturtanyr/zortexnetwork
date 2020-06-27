@@ -22,6 +22,7 @@
             android:entries="@array/category_list"
             android:prompt="@string/spinner_prompt"
             app:layout_constraintTop_toTopOf="parent"
+            style="@android:style/Widget.Spinner"
             />
 
         <androidx.recyclerview.widget.RecyclerView
