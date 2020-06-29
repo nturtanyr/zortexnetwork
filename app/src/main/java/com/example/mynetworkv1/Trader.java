@@ -26,7 +26,7 @@ public class Trader {
 
     public void Trader()
     {
-        //TODO: Fill this out to assign all variables with a dictionary or something
+        // TODO: Fill this out to assign all variables with a dictionary or something
     }
 
     public Trader readTrader(JsonReader jsonReader)

@@ -67,7 +67,7 @@ public class IndividualTrader extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        (new CallAPI(UIHandler, "trader", mTraderID)).execute();
+        (new CallTradersEndpoint(UIHandler, "traders_by_id", mTraderID)).execute();
 
     }
 
