@@ -58,6 +58,8 @@ public class IndividualTrader extends AppCompatActivity {
                 }
             }
         };
+
+
         setContentView(R.layout.activity_individual_trader);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), mTraderID);
         pageViewModel = (new ViewModelProvider(this)).get(PageViewModel.class);

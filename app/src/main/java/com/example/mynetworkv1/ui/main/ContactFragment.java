@@ -105,7 +105,11 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent (Intent.ACTION_SEND);
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, traderEmailString);
+                /* Fill it with Data */
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Text");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{traderEmailString});
                 getContext().startActivity(Intent.createChooser(emailIntent, "Send Mail"));
             }
         });
