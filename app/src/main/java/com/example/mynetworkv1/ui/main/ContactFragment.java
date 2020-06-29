@@ -1,5 +1,7 @@
 package com.example.mynetworkv1.ui.main;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -17,6 +19,8 @@ import com.example.mynetworkv1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.net.URI;
+
 public class ContactFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +31,9 @@ public class ContactFragment extends Fragment {
     private TextView traderEmail;
     private TextView traderPhone;
     private TextView traderLocation;
+
+    private String traderEmailString;
+    private String traderPhoneString;
 
     public ContactFragment() {
         // Required empty public constructor
@@ -62,6 +69,7 @@ public class ContactFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 traderEmail.setText("Email: " + s);
+                traderEmailString = s;
             }
         });
 
@@ -69,6 +77,7 @@ public class ContactFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 traderPhone.setText("Phone: " + s);
+                traderPhoneString = "tel:"+s;
             }
         });
 
@@ -81,11 +90,23 @@ public class ContactFragment extends Fragment {
 
         FloatingActionButton emailButton = root.findViewById(R.id.button_email);
 
+        FloatingActionButton phoneButton = root.findViewById(R.id.button_phone);
+
+        phoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent phoneIntent = new Intent (Intent.ACTION_DIAL);
+                phoneIntent.setData(Uri.parse(traderPhoneString));
+                getContext().startActivity(phoneIntent);
+            }
+        });
+
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent emailIntent = new Intent (Intent.ACTION_SEND);
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, traderEmailString);
+                getContext().startActivity(Intent.createChooser(emailIntent, "Send Mail"));
             }
         });
 

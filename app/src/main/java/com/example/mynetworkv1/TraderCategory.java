@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TraderCategory {
-    public String name;
+    public String title;
     public String id;
 
 
@@ -29,8 +29,8 @@ public class TraderCategory {
 
                 // Depending what key it is, it gets assigned to a string variable
                 switch (key) {
-                    case "name":
-                        this.name = jsonReader.nextString();
+                    case "title":
+                        this.title = jsonReader.nextString();
                         break;
                     case "_id":
                         this.id = jsonReader.nextString();
