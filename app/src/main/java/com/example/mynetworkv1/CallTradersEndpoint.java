@@ -1,8 +1,19 @@
 package com.example.mynetworkv1;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.util.JsonReader;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -11,26 +22,66 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ZortexAPI {
-    // Creating a zortexAPI object to organise connection functions and session data
-    // TODO Turn this into a proper WebService object
-    // Defining public connection variable that can be contacted for session information
+public final class CallTradersEndpoint extends AsyncTask<Void, Void, ArrayList<Trader>> {
+
+    private String APIendpoint;
+    private String APIarguments;
+    private Handler UIHandler;
     private HttpsURLConnection connection;
 
     // API URIs
     private String zortexApi_Root = "https://www.zortex.co.uk/_functions/";
     private String zortexApi_traders_endpoint = "traders";
-    private String zortexApi_trader_endpoint = "trader";
     private String zortexApi_traders_by_cat_endpoint = "traders_by_category/";
+    private String zortexApi_trader_by_id_endpoint = "traders_by_id/";
     private String zortexApi_userAgent = "mynetworkApp";
 
-    // This is the constructor - not much going on here
-    public void ZortexApi () {
-        Log.d("ZORTEXAPI","Creating API Object");
+    public CallTradersEndpoint(Handler handler, String endpoint, String arguments) {
+        // Constructor - allows us to read what the main activity currently is
+        this.UIHandler = handler;
+        this.APIendpoint = endpoint;
+        this.APIarguments = arguments;
+    }
+
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected ArrayList<Trader> doInBackground(Void... params) {
+        // Create API object to work with the API
+        ArrayList<Trader> returnObject = new ArrayList<Trader>();
+        // Get the list of traders using getTraders function
+        switch (APIendpoint){
+            case "traders_by_id" :
+                returnObject = getTrader(APIarguments);
+                break;
+            case "traders" :
+                returnObject = getTraders();
+                break;
+            case "traders_by_category" :
+                returnObject = getTradersByCategory(APIarguments);
+                break;
+        }
+        return returnObject;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<Trader> returnObject) {
+        Message response;
+        // Defined a general task that extends AsyncTask to then call/run API calls
+        int responseCode;
+        if(returnObject != null){
+            responseCode = 200;
+        }else{
+            responseCode = 500;
+        }
+        response = UIHandler.obtainMessage(responseCode, returnObject);
+        response.sendToTarget();
     }
 
     // Function for pulling the trader information
-    public ArrayList<Trader> getTraders ()
+    private ArrayList<Trader> getTraders ()
     {
         ArrayList<Trader> traderList = new ArrayList<Trader>();
         // Create connection
@@ -90,15 +141,16 @@ public class ZortexAPI {
 
     // Function for pulling a specific trader's information
     // TODO Add a new HTTP API to change how the endpoint is pulled out
-    public Trader getTrader (String id)
+    private ArrayList<Trader> getTrader (String idString)
     {
-        Log.d("ZORTEXAPI", "Looking to match id: " + id);
-        Trader traderObject = null;
+        ArrayList<Trader> traderList = new ArrayList<Trader>();
+
+        Log.d("ZORTEXAPI", "Looking to match id: " + idString);
         // Create connection
         try {
             // Defines a URL using the API URL
-            URL getTrader_URL = new URL(zortexApi_Root + zortexApi_traders_endpoint);
-            Log.d("ZORTEXAPI","Contacting " + zortexApi_Root + zortexApi_traders_endpoint);
+            URL getTrader_URL = new URL(zortexApi_Root + zortexApi_trader_by_id_endpoint + idString);
+            Log.d("ZORTEXAPI","Contacting " + zortexApi_Root + zortexApi_trader_by_id_endpoint + idString);
 
             // Then attempts to open the connection and assigns to this object's connection variable for later use
             this.connection = (HttpsURLConnection) getTrader_URL.openConnection();
@@ -126,11 +178,8 @@ public class ZortexAPI {
                     jsonReader.beginArray();
                     while (jsonReader.hasNext()){
                         // For each trader we define a new object but don't store it. We can do this later
-                        Trader tempTrader = new Trader().readTrader(jsonReader);
-                        if(tempTrader.id.equals(id)){
-                            Log.d("ZORTEXAPI", "Found object that matches id!"); // Fetch the next key
-                            traderObject = tempTrader;
-                        }
+                        Trader traderObject = new Trader().readTrader(jsonReader);
+                        traderList.add(traderObject);
                     }
                     jsonReader.endArray();
                 }
@@ -146,11 +195,11 @@ public class ZortexAPI {
 
         }
 
-        return traderObject;
+        return traderList;
     }
 
     // Function for pulling the trader cateogry information
-    public ArrayList<Trader> getTradersByCategory (String categoryString)
+    private ArrayList<Trader> getTradersByCategory (String categoryString)
     {
         ArrayList<Trader> traderList = new ArrayList<Trader>();
         // Create connection

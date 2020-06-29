@@ -80,24 +80,24 @@ public class MainActivity extends AppCompatActivity {
                 String categoryId = catDict.get(parent.getItemAtPosition(pos).toString());
                 Log.d("spinner", categoryId);
                 if(categoryId == ""){
-                    (new CallAPI(UIHandler,"traders",null)).execute();
+                    (new CallTradersEndpoint(UIHandler,"traders",null)).execute();
                 }
                 else {
 
 
-                    (new CallAPI(UIHandler,"traders_by_category", categoryId)).execute();
+                    (new CallTradersEndpoint(UIHandler,"traders_by_category", categoryId)).execute();
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
-                (new CallAPI(UIHandler,"traders",null)).execute();
+                (new CallTradersEndpoint(UIHandler,"traders",null)).execute();
             }
         });
 
 
-        (new CallAPI(UIHandler,"traders",null)).execute();
+        (new CallTradersEndpoint(UIHandler,"traders",null)).execute();
     }
 
 
