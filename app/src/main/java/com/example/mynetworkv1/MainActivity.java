@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler UIHandler;
     private Handler SpinnerHandler;
     private Spinner categorySpinner;
+    private ProgressBar loadingZ;
+    private AnimationDrawable animationDrawable;
     public static HashMap<String, String> catDict = new HashMap<String, String>(){{
         put("All", "");
     }};
@@ -40,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        loadingZ = findViewById(R.id.indeterminateBar);
+
+        loadingZ.setIndeterminateDrawable(getResources().getDrawable(R.drawable.loading_z));
+        //animationDrawable = (AnimationDrawable)loadingZ.getBackground();
+        loadingZ.setVisibility(View.VISIBLE);
+        //animationDrawable.start();
 
         UIHandler = new Handler(Looper.getMainLooper()){
             @Override
@@ -52,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 200:
                         Log.d("HANDLER","The MAIN handler received 200");
+                        loadingZ.setVisibility(View.GONE);
+                        //animationDrawable.stop();
                         cardListAdapter.SetCardList(tradersList);
                         cardListAdapter.notifyDataSetChanged();
                         break;

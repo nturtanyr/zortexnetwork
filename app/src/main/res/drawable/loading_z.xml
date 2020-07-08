@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@drawable/zortexgif1"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif2"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif3"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif4"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif5"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif6"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif7"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif8"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif9"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif10"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif11"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif12"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif13"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif14"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif15"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif16"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif17"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif18"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif19"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif20"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif21"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif22"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif23"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif24"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif25"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif26"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif27"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif28"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif29"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif30"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif31"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif32"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif33"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif34"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif35"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif36"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif37"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif38"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif39"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/zortexgif40"
+        android:duration="80" />
+</animation-list>
